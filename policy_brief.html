@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Policy Brief — Maslikhat Accountability in Kazakhstan</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Serif:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#F7F8FA;color:#1A1A2E;font-family:'IBM Plex Sans',sans-serif;font-size:15px;line-height:1.7}
+
+/* ── Nav ── */
+nav{background:#1A1A2E;padding:0 2.5rem;height:48px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-name{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#4FFFB0;letter-spacing:0.06em;text-decoration:none}
+.nav-back{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#9CA3AF;text-decoration:none;transition:color 0.2s}
+.nav-back:hover{color:#fff}
+
+/* ── Header ── */
+.brief-header{background:#1A1A2E;padding:3rem 2.5rem 2.5rem;border-left:5px solid #4FFFB0}
+.brief-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#4FFFB0;letter-spacing:0.12em;margin-bottom:1rem}
+.brief-title{font-family:'IBM Plex Serif',serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:600;color:#fff;line-height:1.2;margin-bottom:1rem;max-width:700px}
+.brief-sub{font-size:13px;color:#9CA3AF;max-width:620px;line-height:1.6;margin-bottom:1.5rem}
+.brief-meta{display:flex;flex-wrap:wrap;gap:20px}
+.meta-item{display:flex;flex-direction:column;gap:2px}
+.meta-label{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#6B7280;letter-spacing:0.08em}
+.meta-val{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#E5E7EB}
+
+/* ── Key stats strip ── */
+.stats-strip{background:#fff;border-bottom:1px solid #E5E7EB;display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:1.25rem 1.5rem;border-right:1px solid #E5E7EB}
+.stat:last-child{border-right:none}
+.stat-num{font-family:'IBM Plex Mono',monospace;font-size:1.6rem;font-weight:500;color:#1A1A2E;line-height:1;margin-bottom:4px}
+.stat-num span{color:#C53030}
+.stat-lbl{font-size:11px;color:#6B7280;line-height:1.4}
+
+/* ── Body ── */
+.brief-body{max-width:820px;margin:0 auto;padding:3rem 2rem}
+
+/* ── Sections ── */
+.section{margin-bottom:2.5rem}
+.section-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#6B7280;letter-spacing:0.1em;margin-bottom:0.5rem}
+h2{font-family:'IBM Plex Serif',serif;font-size:1.25rem;font-weight:600;color:#1A1A2E;margin-bottom:1rem;padding-bottom:0.5rem;border-bottom:2px solid #1A1A2E}
+h3{font-size:13px;font-weight:600;color:#1A1A2E;margin-bottom:0.4rem;margin-top:1rem}
+p{color:#374151;margin-bottom:0.9rem;font-size:14px;line-height:1.75}
+p:last-child{margin-bottom:0}
+
+/* ── Summary box ── */
+.summary-box{background:#EEF2F7;border-left:4px solid #1A1A2E;padding:1.25rem 1.5rem;margin-bottom:2rem;border-radius:0 4px 4px 0}
+.summary-box p{color:#1A1A2E;font-size:14px;font-weight:400;margin:0}
+
+/* ── Finding cards ── */
+.findings{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:1.25rem 0}
+.finding{background:#fff;border:1px solid #E5E7EB;border-top:3px solid;padding:1rem 1.25rem;border-radius:0 0 4px 4px}
+.finding.f1{border-top-color:#1A1A2E}
+.finding.f2{border-top-color:#2563EB}
+.finding.f3{border-top-color:#D97706}
+.finding-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#9CA3AF;margin-bottom:6px;letter-spacing:0.06em}
+.finding-title{font-size:12px;font-weight:600;color:#1A1A2E;margin-bottom:6px}
+.finding p{font-size:12px;color:#6B7280;line-height:1.6;margin:0}
+
+/* ── Recommendations ── */
+.rec-list{display:flex;flex-direction:column;gap:10px;margin:1rem 0}
+.rec{background:#fff;border:1px solid #E5E7EB;border-radius:4px;padding:1rem 1.25rem;display:flex;gap:14px;align-items:flex-start}
+.rec-num{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;color:#fff;background:#1A1A2E;min-width:24px;height:24px;border-radius:2px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.rec-content h3{font-size:13px;font-weight:600;color:#1A1A2E;margin:0 0 4px 0}
+.rec-content p{font-size:12px;color:#6B7280;line-height:1.6;margin:0}
+.rec-tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:9px;padding:2px 7px;border-radius:2px;margin-bottom:5px;letter-spacing:0.04em}
+.tag-short{background:#DCFCE7;color:#166534}
+.tag-medium{background:#FEF3C7;color:#92400E}
+.tag-long{background:#EDE9FE;color:#5B21B6}
+
+/* ── Quote block ── */
+.pull-quote{border-left:4px solid #C53030;padding:1rem 1.5rem;margin:1.5rem 0;background:#fff}
+.pull-quote p{font-family:'IBM Plex Serif',serif;font-size:14px;color:#1A1A2E;font-style:italic;margin:0 0 6px 0}
+.pull-quote cite{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#9CA3AF}
+
+/* ── Context table ── */
+.context-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:1rem 0}
+.ctx-item{background:#fff;border:1px solid #E5E7EB;padding:1rem 1.25rem;border-radius:4px}
+.ctx-label{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#9CA3AF;letter-spacing:0.08em;margin-bottom:4px}
+.ctx-val{font-size:13px;font-weight:500;color:#1A1A2E;margin-bottom:2px}
+.ctx-sub{font-size:11px;color:#6B7280}
+
+/* ── Footer ── */
+.brief-footer{background:#1A1A2E;padding:1.5rem 2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:gap;gap:10px}
+.brief-footer p{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#6B7280}
+.brief-footer a{color:#4FFFB0;text-decoration:none}
+
+@media(max-width:640px){
+  .stats-strip{grid-template-columns:1fr 1fr}
+  .findings{grid-template-columns:1fr}
+  .context-grid{grid-template-columns:1fr}
+  .stat{border-right:none;border-bottom:1px solid #E5E7EB}
+  .brief-header,.brief-body,.nav{padding-left:1.25rem;padding-right:1.25rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-back">← Back to portfolio</a>
+  <a href="index.html" class="nav-name">// diar.islambekov</a>
+</nav>
+
+<div class="brief-header">
+  <div class="brief-label">POLICY BRIEF · LOCAL GOVERNANCE · KAZAKHSTAN</div>
+  <h1 class="brief-title">Rethinking Accountability in Kazakhstan's Local Governance: Lessons from Maslikhat Deputies</h1>
+  <p class="brief-sub">Drawing on original field research with Maslikhat deputies in Kokshetau, this brief argues that effective accountability reform must go beyond formal mechanisms — recognising how deputies' personal values, local identity, and institutional constraints shape governance in practice.</p>
+  <div class="brief-meta">
+    <div class="meta-item"><span class="meta-label">AUTHOR</span><span class="meta-val">Diar Islambekov</span></div>
+    <div class="meta-item"><span class="meta-label">INSTITUTION</span><span class="meta-val">University of Tsukuba</span></div>
+    <div class="meta-item"><span class="meta-label">PROGRAMME</span><span class="meta-val">MA International Public Policy</span></div>
+    <div class="meta-item"><span class="meta-label">DATE</span><span class="meta-val">December 2025</span></div>
+  </div>
+</div>
+
+<div class="stats-strip">
+  <div class="stat">
+    <div class="stat-num"><span>18</span>th %ile</div>
+    <div class="stat-lbl">Kazakhstan's World Bank Voice &amp; Accountability percentile rank — bottom fifth globally (2022)</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">3,300<span>+</span></div>
+    <div class="stat-lbl">Maslikhat deputies across Kazakhstan's 17 regions and 3 major cities</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">5.1<span>tn</span></div>
+    <div class="stat-lbl">Tenge in annual local budgets overseen by Maslikhats (~$11bn) — Prime Minister of Kazakhstan, 2023</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num"><span>3.08</span>/10</div>
+    <div class="stat-lbl">Kazakhstan's EIU Democracy Index score (2024) — classified as "authoritarian regime"</div>
+  </div>
+</div>
+
+<div class="brief-body">
+
+  <div class="section">
+    <div class="section-tag">EXECUTIVE SUMMARY</div>
+    <h2>The issue</h2>
+    <div class="summary-box">
+      <p>Kazakhstan's Maslikhat deputies are among the country's most publicly accountable officials — directly elected by citizens to represent local constituencies and oversee budgets worth billions. Yet public trust in them remains low, their roles are widely misunderstood, and formal accountability mechanisms consistently fall short in practice. This brief presents findings from original qualitative research with deputies in Kokshetau city and offers five evidence-based recommendations for reform.</p>
+    </div>
+    <p>Despite a decade of governance reform under President Tokayev — including the 2021 Concept of Development of Local Self-Government, the 2023 introduction of a mixed electoral system for Maslikhats, and the first direct elections of district akims — the gap between formal accountability requirements and actual practice remains wide.</p>
+
+    <div class="pull-quote">
+      <p>"Reports of Maslikhat deputies to voters are often formal in nature."</p>
+      <cite>— President Kassym-Jomart Tokayev, Second Republican Forum of Maslikhat Deputies, October 2024</cite>
+    </div>
+
+    <p>This presidential critique — delivered directly to over 2,300 deputies — underscores a systemic failure that this research helps explain: accountability in Kazakhstan's local governance is shaped less by formal rules than by deputies' personal values, local relationships, and the institutional constraints they navigate daily.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-tag">GOVERNANCE CONTEXT</div>
+    <h2>The political landscape</h2>
+    <div class="context-grid">
+      <div class="ctx-item">
+        <div class="ctx-label">VOICE &amp; ACCOUNTABILITY</div>
+        <div class="ctx-val">-1.07 points (2022)</div>
+        <div class="ctx-sub">World Bank WGI — well below the global average of -0.05. Score has remained persistently negative since independence.</div>
+      </div>
+      <div class="ctx-item">
+        <div class="ctx-label">LOCAL GOVERNANCE REFORM</div>
+        <div class="ctx-val">Ongoing since 2021</div>
+        <div class="ctx-sub">Mixed electoral system introduced for Maslikhats in 2023. First direct akim elections held in 42 districts with 62.8% turnout.</div>
+      </div>
+      <div class="ctx-item">
+        <div class="ctx-label">INSTITUTIONAL CONTEXT</div>
+        <div class="ctx-val">Strong executive dominance</div>
+        <div class="ctx-sub">Maslikhats often more accountable to central government than to local constituents. Akimats (executive bodies) hold significantly more power.</div>
+      </div>
+      <div class="ctx-item">
+        <div class="ctx-label">CIVIC ENGAGEMENT</div>
+        <div class="ctx-val">Persistently low</div>
+        <div class="ctx-sub">63% of citizens surveyed believed no political party represented their interests (Demoscope/Paper Lab, 2023). Civil society faces significant restrictions.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-tag">RESEARCH FINDINGS</div>
+    <h2>What the research found</h2>
+    <p>Through semi-structured interviews with Maslikhat deputies in Kokshetau, this study identified three distinct ways deputies understand accountability — and the factors that shape their behaviour in practice.</p>
+
+    <div class="findings">
+      <div class="finding f1">
+        <div class="finding-num">FINDING 01</div>
+        <div class="finding-title">Three accountability archetypes</div>
+        <p>Deputies fall into three groups: those who prioritise <strong>continuous accessibility</strong> (24/7 availability via phone and social media); those focused on <strong>delivering results</strong> while maintaining operational discretion; and those driven by <strong>civic duty</strong> rather than professional obligation.</p>
+      </div>
+      <div class="finding f2">
+        <div class="finding-num">FINDING 02</div>
+        <div class="finding-title">Informal mechanisms dominate</div>
+        <p>Deputies have created their own accountability channels — social media updates, direct constituent hotlines, community visits — to compensate for weak formal mechanisms. These informal systems are more trusted by citizens than official reporting processes.</p>
+      </div>
+      <div class="finding f3">
+        <div class="finding-num">FINDING 03</div>
+        <div class="finding-title">Institutional constraints are critical</div>
+        <p>Deputies' accountability is severely constrained by limited institutional authority relative to Akimats, the voluntary nature of their role, lack of resources, and low public awareness of what Maslikhat deputies can actually do.</p>
+      </div>
+    </div>
+
+    <p>A key theoretical contribution of this research is the application of <em>felt accountability theory</em> to a post-Soviet context. Deputies' sense of accountability is driven primarily by personal reputation, community connection, and constituent need — not by formal institutional pressures. This "felt" accountability, rooted in personal values rather than rules, is both a strength and a vulnerability of the current system.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-tag">POLICY RECOMMENDATIONS</div>
+    <h2>Five recommendations for reform</h2>
+    <p>These recommendations are designed to be realistic within Kazakhstan's current political context — they work with existing reform momentum rather than requiring systemic democratic transformation.</p>
+
+    <div class="rec-list">
+      <div class="rec">
+        <div class="rec-num">1</div>
+        <div class="rec-content">
+          <span class="rec-tag tag-short">SHORT TERM</span>
+          <h3>Standardise constituent reporting — but make it substantive</h3>
+          <p>Mandatory reporting sessions already exist but are widely acknowledged as performative. Reform should require deputies to publish structured reports — covering budget decisions, constituency requests received, requests resolved, and requests pending — on a public digital platform. This converts reporting from a ritual into a transparency tool, directly addressing President Tokayev's October 2024 critique.</p>
+        </div>
+      </div>
+      <div class="rec">
+        <div class="rec-num">2</div>
+        <div class="rec-content">
+          <span class="rec-tag tag-short">SHORT TERM</span>
+          <h3>Invest in public education about Maslikhat roles</h3>
+          <p>A recurring theme in this research is that citizens do not understand what Maslikhat deputies can and cannot do — leading to unrealistic expectations and frustration. A targeted public information campaign, delivered through schools, local media, and social platforms, would build the civic literacy needed for accountability to function. UNDP Kazakhstan's ongoing local governance support programme offers a ready vehicle for this.</p>
+        </div>
+      </div>
+      <div class="rec">
+        <div class="rec-num">3</div>
+        <div class="rec-content">
+          <span class="rec-tag tag-medium">MEDIUM TERM</span>
+          <h3>Formalise and resource deputies' informal accountability mechanisms</h3>
+          <p>Deputies have already built effective accountability tools — constituency hotlines, social media channels, community visits — using personal resources. Government should formally recognise these mechanisms, provide modest administrative support, and incorporate them into deputies' formal accountability frameworks. This legitimises what already works rather than imposing new bureaucratic requirements.</p>
+        </div>
+      </div>
+      <div class="rec">
+        <div class="rec-num">4</div>
+        <div class="rec-content">
+          <span class="rec-tag tag-medium">MEDIUM TERM</span>
+          <h3>Rebalance institutional authority between Maslikhats and Akimats</h3>
+          <p>Deputies consistently report that their ability to hold local executive bodies accountable is severely constrained by power imbalances with Akimats. Strengthening Maslikhats' oversight powers — including clearer mechanisms for questioning akim decisions and reviewing budget implementation — would give formal accountability teeth. This aligns with the direction of Tokayev's 2022–2024 reform agenda.</p>
+        </div>
+      </div>
+      <div class="rec">
+        <div class="rec-num">5</div>
+        <div class="rec-content">
+          <span class="rec-tag tag-long">LONG TERM</span>
+          <h3>Extend this research to other regions and include citizen perspectives</h3>
+          <p>This study focused on Kokshetau — a mid-sized city whose dynamics may differ significantly from rural districts, smaller towns, or major urban centres like Almaty and Astana. A comparative multi-region study incorporating both deputy and citizen perspectives would provide the evidence base needed to design nationally scalable reform. International partners including UNDP, OECD, and the World Bank have all signalled interest in supporting Kazakhstan's local governance reform agenda.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-tag">CONCLUSION</div>
+    <h2>The bottom line</h2>
+    <p>Accountability in Kazakhstan's local governance cannot be fixed by formal mechanisms alone. This research shows that deputies' sense of responsibility is deeply personal — driven by reputation, community belonging, and civic values — and that effective reform must work with these motivations rather than against them.</p>
+    <p>The good news is that genuine reform momentum exists. President Tokayev's rhetorical commitment to accountability, the 2023 electoral reforms, and the first direct akim elections all signal political will. What is needed now is a shift from formal compliance to substantive engagement — and from top-down mandates to reforms that reflect how accountability actually works on the ground.</p>
+    <p>Kazakhstan's local governance reform offers lessons not only for the country itself but for other post-Soviet states navigating the same transition: hybrid regimes can develop authentic accountability cultures, but only when reform is grounded in the lived experience of the officials it seeks to change.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-tag">SOURCES</div>
+    <h2>Key references</h2>
+    <p style="font-size:12px;color:#6B7280;line-height:1.8">
+      World Bank Worldwide Governance Indicators — Voice &amp; Accountability percentile rank 18th (2022) · EIU Democracy Index: Kazakhstan score 3.08/10, authoritarian classification (2024) · Freedom House Nations in Transit: Kazakhstan Democracy Score 1.29 (2024) · Astana Times: Tokayev's 2022–2024 Reforms (2025) · UNDP Kazakhstan: Local Self-Governance Reform Programme (2025) · BTI Kazakhstan Country Report (2024) · Government of Kazakhstan: Concept of Development of Local Self-Government until 2025 (2021) · Prime Minister of Kazakhstan: local budget figure 5.1 trillion tenge (2023) · Overman &amp; Schillemans (2021): Felt Accountability · Schedler (1999): Conceptualizing Accountability · O'Donnell (1994): Delegative Democracy · Islambekov, D. (2024): Conceptualizing Accountability in Local Governance — MA Thesis, University of Tsukuba.
+    </p>
+  </div>
+
+</div>
+
+<div class="brief-footer">
+  <p>© 2025 Diar Islambekov · University of Tsukuba · International Public Policy</p>
+  <p><a href="index.html">← Return to portfolio</a></p>
+</div>
+
+</body>
+</html>
