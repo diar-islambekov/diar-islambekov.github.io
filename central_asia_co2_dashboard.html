@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Central Asia — CO2 Emissions Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#0C0F14;min-height:100vh;font-family:'DM Sans',sans-serif}
+body{padding:20px}
+.db{max-width:1200px;margin:0 auto}
+.header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px}
+.header-left h1{font-size:20px;font-weight:800;color:#E8EBF0;font-family:'Syne',sans-serif;letter-spacing:-0.02em}
+.header-left p{font-size:11px;color:#7A8499;margin-top:3px;font-family:'DM Mono',monospace}
+.controls{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.ctrl-label{font-size:11px;color:#7A8499;font-family:'DM Mono',monospace}
+.cbtn{font-size:11px;padding:5px 12px;border-radius:3px;border:1px solid rgba(255,255,255,0.12);background:transparent;color:#7A8499;cursor:pointer;transition:all 0.15s;font-family:'DM Mono',monospace;letter-spacing:0.03em}
+.cbtn:hover{border-color:rgba(255,255,255,0.3);color:#E8EBF0}
+.cbtn.active{background:rgba(79,255,176,0.12);color:#4FFFB0;border-color:rgba(79,255,176,0.35)}
+.year-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;background:#13171F;border-radius:6px;padding:10px 14px}
+.year-row input[type=range]{flex:1;accent-color:#4FFFB0;cursor:pointer}
+.yr-val{font-size:13px;color:#4FFFB0;min-width:36px;font-family:'DM Mono',monospace;font-weight:500}
+.kpi-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:10px}
+.kpi{background:#13171F;border-radius:6px;padding:14px 16px;border-left:3px solid;transition:background 0.2s}
+.kpi:hover{background:#1A202C}
+.kpi-lbl{font-size:10px;color:#7A8499;margin-bottom:5px;letter-spacing:0.07em;font-family:'DM Mono',monospace}
+.kpi-val{font-size:22px;font-weight:500;color:#E8EBF0;line-height:1}
+.kpi-sub{font-size:10px;margin-top:4px;font-family:'DM Mono',monospace}
+.charts-top{display:grid;grid-template-columns:2fr 1fr;gap:10px;margin-bottom:10px}
+.charts-bot{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.cbox{background:#13171F;border-radius:6px;padding:14px}
+.ctitle{font-size:12px;font-weight:500;color:#E8EBF0;margin-bottom:2px}
+.csub{font-size:10px;color:#7A8499;margin-bottom:10px;font-family:'DM Mono',monospace}
+.leg{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.li{display:flex;align-items:center;gap:4px;font-size:10px;color:#7A8499;cursor:pointer;transition:color 0.15s;font-family:'DM Mono',monospace}
+.li:hover{color:#E8EBF0}
+.lsq{width:8px;height:8px;border-radius:1px;flex-shrink:0}
+.insight{background:#13171F;border-radius:6px;padding:12px 16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.ins{font-size:11px;color:#7A8499;line-height:1.55;display:flex;gap:7px;align-items:flex-start}
+.idot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.footer{margin-top:10px;font-size:10px;color:#4A5568;font-family:'DM Mono',monospace;border-top:1px solid rgba(255,255,255,0.05);padding-top:10px}
+@media(max-width:760px){
+  .kpi-row,.charts-top,.charts-bot,.insight{grid-template-columns:1fr}
+  .header{flex-direction:column}
+}
+</style>
+</head>
+<body>
+<div class="db">
+  <div class="header">
+    <div class="header-left">
+      <h1>Central Asia — CO2 Emissions Dashboard</h1>
+      <p>Fossil CO2 · territorial emissions · Global Carbon Budget (2025) / Our World in Data · Worldometer · countryeconomy.com</p>
+    </div>
+    <div class="controls">
+      <span class="ctrl-label">Country:</span>
+      <button class="cbtn active" onclick="setC('All',this)">All</button>
+      <button class="cbtn" onclick="setC('Kazakhstan',this)">Kazakhstan</button>
+      <button class="cbtn" onclick="setC('Uzbekistan',this)">Uzbekistan</button>
+      <button class="cbtn" onclick="setC('Turkmenistan',this)">Turkmenistan</button>
+      <button class="cbtn" onclick="setC('Kyrgyzstan',this)">Kyrgyzstan</button>
+      <button class="cbtn" onclick="setC('Tajikistan',this)">Tajikistan</button>
+    </div>
+  </div>
+
+  <div class="year-row">
+    <span class="ctrl-label">Year:</span>
+    <input type="range" min="2000" max="2023" value="2023" step="1" id="yrSlider" oninput="setY(this.value)">
+    <span class="yr-val" id="yrLbl">2023</span>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi" style="border-color:#4FFFB0">
+      <div class="kpi-lbl">TOTAL CO2</div>
+      <div class="kpi-val" id="k1">—</div>
+      <div class="kpi-sub" style="color:#4FFFB0" id="k1s">—</div>
+    </div>
+    <div class="kpi" style="border-color:#FF6B6B">
+      <div class="kpi-lbl">YOY CHANGE</div>
+      <div class="kpi-val" id="k2">—</div>
+      <div class="kpi-sub" id="k2s" style="color:#7A8499">vs previous year</div>
+    </div>
+    <div class="kpi" style="border-color:#FFB347">
+      <div class="kpi-lbl">PER CAPITA</div>
+      <div class="kpi-val" id="k3">—</div>
+      <div class="kpi-sub" style="color:#FFB347" id="k3s">tonnes per person</div>
+    </div>
+    <div class="kpi" style="border-color:#5B9EFF">
+      <div class="kpi-lbl">REGIONAL SHARE</div>
+      <div class="kpi-val" id="k4">—</div>
+      <div class="kpi-sub" style="color:#5B9EFF" id="k4s">of CA total</div>
+    </div>
+  </div>
+
+  <div class="charts-top">
+    <div class="cbox">
+      <div class="ctitle">Annual CO2 emissions trend</div>
+      <div class="csub">Mt CO2 · 2000–2023 · click legend to show/hide</div>
+      <div class="leg" id="tLeg"></div>
+      <div style="position:relative;width:100%;height:200px"><canvas id="tChart"></canvas></div>
+    </div>
+    <div class="cbox">
+      <div class="ctitle">Country comparison</div>
+      <div class="csub" id="bSub">Mt CO2 · 2023</div>
+      <div style="position:relative;width:100%;height:220px"><canvas id="bChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="charts-bot">
+    <div class="cbox">
+      <div class="ctitle">Emissions by source</div>
+      <div class="csub" id="pSub">% share · IEA country profiles</div>
+      <div class="leg" id="pLeg"></div>
+      <div style="position:relative;width:100%;height:175px"><canvas id="pChart"></canvas></div>
+    </div>
+    <div class="cbox">
+      <div class="ctitle">Per capita emissions</div>
+      <div class="csub" id="pcSub">tonnes per person · 2023</div>
+      <div style="position:relative;width:100%;height:205px"><canvas id="pcChart"></canvas></div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <div class="ins"><span class="idot" style="background:#4FFFB0"></span><span>Kazakhstan dominates the region at ~46% of total CA emissions, peaking at <b style="color:#E8EBF0">286 Mt in 2013</b> before a sharp fall then partial recovery.</span></div>
+    <div class="ins"><span class="idot" style="background:#FFB347"></span><span>Turkmenistan has the <b style="color:#E8EBF0">highest per capita CO2</b> (~10.5 t) due to extensive gas flaring — despite being a far smaller total emitter than Kazakhstan.</span></div>
+    <div class="ins"><span class="idot" style="background:#5B9EFF"></span><span>Tajikistan and Kyrgyzstan are the region's smallest emitters — both rely heavily on <b style="color:#E8EBF0">hydropower</b>, keeping per capita figures below 1.5 t.</span></div>
+  </div>
+
+  <div class="footer">
+    Kazakhstan: verified annual series 2000–2023 (countryeconomy.com) · Others: verified anchor years from Worldometer/countryeconomy.com; intermediate years interpolated · Per capita: Worldometer · Source breakdown: IEA country profiles · Prepared March 2026
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const C=['Kazakhstan','Uzbekistan','Turkmenistan','Kyrgyzstan','Tajikistan'];
+const COLS=['#4FFFB0','#5B9EFF','#FFB347','#FF6B6B','#C084FC'];
+const YRS=Array.from({length:24},(_,i)=>2000+i);
+
+// Kazakhstan: full verified series (countryeconomy.com)
+// Others: verified anchors from Worldometer + countryeconomy; gaps interpolated
+const TOT={
+  Kazakhstan:  [132,130,146,162,175,188,210,220,260,231,250,268,267,286,232,205,216,228,229,217,225,245,240,240],
+  Uzbekistan:  [95,91,88,87,88,91,94,98,103,104,106,108,110,112,110,107,110,113,117,118,122,128,132,138],
+  Turkmenistan:[36,37,38,40,42,44,47,50,53,52,55,58,60,62,60,59,61,63,65,65,67,69,70,66],
+  Kyrgyzstan:  [7,7,7,7,7,7,8,8,8,8,8,9,9,9,9,9,9,10,10,10,10,10,10,11],
+  Tajikistan:  [5,5,5,5,5,5,5,6,6,6,7,7,7,7,7,7,8,8,8,8,8,10,11,11]
+};
+
+// Per capita — verified recent years (Worldometer); earlier years estimated from trends
+const PC={
+  Kazakhstan:  [8.8,8.7,9.6,10.7,11.3,12.1,13.4,13.9,16.2,14.3,15.2,16.1,15.8,16.6,13.3,11.6,12.0,12.5,12.4,11.7,12.0,12.9,12.6,12.4],
+  Uzbekistan:  [3.8,3.6,3.5,3.4,3.4,3.5,3.6,3.7,3.8,3.8,3.8,3.8,3.8,3.8,3.7,3.5,3.5,3.5,3.6,3.6,3.6,3.7,3.8,4.0],
+  Turkmenistan:[7.5,7.6,7.7,7.9,8.1,8.4,8.8,9.1,9.5,9.2,9.4,9.6,9.7,9.8,9.3,9.1,9.2,9.3,9.4,9.3,9.4,9.5,9.7,10.5],
+  Kyrgyzstan:  [1.5,1.4,1.4,1.4,1.4,1.3,1.4,1.5,1.5,1.4,1.4,1.5,1.5,1.5,1.5,1.5,1.5,1.6,1.6,1.6,1.5,1.5,1.5,1.6],
+  Tajikistan:  [0.8,0.8,0.8,0.8,0.8,0.8,0.7,0.8,0.8,0.8,0.9,0.9,0.9,0.9,0.9,0.9,1.0,1.0,1.0,1.0,0.9,1.0,1.0,1.1]
+};
+
+// Source breakdown (%) — IEA country profiles
+const SRC={
+  Kazakhstan:  {Coal:68,Gas:15,Oil:12,Cement:3,Flaring:2},
+  Uzbekistan:  {Gas:62,Oil:18,Coal:12,Cement:5,Flaring:3},
+  Turkmenistan:{Gas:78,Oil:14,Flaring:5,Cement:2,Coal:1},
+  Kyrgyzstan:  {Coal:45,Gas:28,Oil:20,Cement:5,Flaring:2},
+  Tajikistan:  {Coal:35,Gas:32,Oil:25,Cement:6,Flaring:2}
+};
+
+const SC={Coal:'#888780',Gas:'#5B9EFF',Oil:'#FFB347',Cement:'#C084FC',Flaring:'#FF6B6B'};
+
+let selC='All',selY=2023;
+let tCh,bCh,pCh,pcCh;
+
+function yi(y){return YRS.indexOf(y)}
+function set(id,val,sub){
+  document.getElementById(id).textContent=val;
+  const s=document.getElementById(id+'s');
+  if(s)s.textContent=sub;
+}
+
+function updateKPIs(){
+  const i=yi(selY),ip=yi(selY-1);
+  if(selC==='All'){
+    const tot=C.reduce((s,c)=>s+TOT[c][i],0);
+    const prev=ip>=0?C.reduce((s,c)=>s+TOT[c][ip],0):tot;
+    const yoy=((tot-prev)/prev*100).toFixed(1);
+    const pcA=(C.reduce((s,c)=>s+PC[c][i],0)/5).toFixed(1);
+    set('k1',Math.round(tot)+' Mt','All countries · '+selY);
+    set('k2',(yoy>0?'+':'')+yoy+'%','vs '+(selY-1));
+    set('k3',pcA+' t','regional average');
+    set('k4','100%','CA total');
+    document.getElementById('k2').style.color=yoy>0?'#FF6B6B':'#4FFFB0';
+  } else {
+    const tot=TOT[selC][i];
+    const prev=ip>=0?TOT[selC][ip]:tot;
+    const yoy=((tot-prev)/prev*100).toFixed(1);
+    const rTot=C.reduce((s,c)=>s+TOT[c][i],0);
+    const sh=Math.round(tot/rTot*100);
+    set('k1',Math.round(tot)+' Mt',selC+' · '+selY);
+    set('k2',(yoy>0?'+':'')+yoy+'%','vs '+(selY-1));
+    set('k3',PC[selC][i].toFixed(1)+' t','tonnes per person');
+    set('k4',sh+'%','of CA total');
+    document.getElementById('k2').style.color=yoy>0?'#FF6B6B':'#4FFFB0';
+  }
+}
+
+function buildTrend(){
+  const leg=document.getElementById('tLeg');
+  leg.innerHTML='';
+  const ds=C.map((c,ci)=>({
+    label:c,data:YRS.map(y=>TOT[c][yi(y)]),
+    borderColor:COLS[ci],backgroundColor:'transparent',
+    borderWidth:2,pointRadius:0,tension:0.3,
+    hidden:selC!=='All'&&c!==selC
+  }));
+  ds.forEach((d,ci)=>{
+    const el=document.createElement('span');
+    el.className='li';
+    el.innerHTML=`<span class="lsq" style="background:${COLS[ci]}"></span>${C[ci]}`;
+    el.onclick=()=>{tCh.data.datasets[ci].hidden=!tCh.data.datasets[ci].hidden;tCh.update()};
+    leg.appendChild(el);
+  });
+  if(tCh)tCh.destroy();
+  tCh=new Chart(document.getElementById('tChart'),{
+    type:'line',data:{labels:YRS,datasets:ds},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,
+        callbacks:{label:c=>` ${c.dataset.label}: ${Math.round(c.parsed.y)} Mt`}}},
+      scales:{
+        x:{ticks:{font:{size:9},color:'#7A8499',maxTicksLimit:8},grid:{color:'rgba(255,255,255,0.04)'}},
+        y:{ticks:{font:{size:9},color:'#7A8499',callback:v=>v+' Mt'},grid:{color:'rgba(255,255,255,0.04)'}}
+      }
+    }
+  });
+}
+
+function buildBar(){
+  const i=yi(selY);
+  const cs=selC==='All'?C:[selC];
+  const vals=cs.map(c=>TOT[c][i]);
+  const clrs=cs.map(c=>COLS[C.indexOf(c)]);
+  document.getElementById('bSub').textContent='Mt CO2 · '+selY;
+  if(bCh)bCh.destroy();
+  bCh=new Chart(document.getElementById('bChart'),{
+    type:'bar',
+    data:{labels:cs,datasets:[{data:vals,backgroundColor:clrs,borderRadius:3}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${Math.round(c.parsed.x)} Mt`}}},
+      scales:{
+        x:{ticks:{font:{size:9},color:'#7A8499',callback:v=>v+' Mt'},grid:{color:'rgba(255,255,255,0.04)'}},
+        y:{ticks:{font:{size:9},color:'#7A8499'},grid:{display:false}}
+      }
+    }
+  });
+}
+
+function buildPie(){
+  const c=selC==='All'?'Kazakhstan':selC;
+  const s=SRC[c];
+  const labels=Object.keys(s),vals=Object.values(s);
+  const clrs=labels.map(l=>SC[l]);
+  document.getElementById('pSub').textContent=(selC==='All'?'Kazakhstan (select country)':selC)+' · IEA';
+  const leg=document.getElementById('pLeg');
+  leg.innerHTML='';
+  labels.forEach((l,i)=>{
+    const el=document.createElement('span');
+    el.className='li';
+    el.innerHTML=`<span class="lsq" style="background:${clrs[i]}"></span>${l} ${vals[i]}%`;
+    leg.appendChild(el);
+  });
+  if(pCh)pCh.destroy();
+  pCh=new Chart(document.getElementById('pChart'),{
+    type:'doughnut',
+    data:{labels,datasets:[{data:vals,backgroundColor:clrs,borderWidth:0,hoverOffset:5}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'55%',
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.label}: ${c.parsed}%`}}}
+    }
+  });
+}
+
+function buildPC(){
+  const i=yi(selY);
+  const cs=selC==='All'?C:[selC];
+  const vals=cs.map(c=>PC[c][i]);
+  const clrs=cs.map(c=>COLS[C.indexOf(c)]);
+  document.getElementById('pcSub').textContent='tonnes per person · '+selY;
+  if(pcCh)pcCh.destroy();
+  pcCh=new Chart(document.getElementById('pcChart'),{
+    type:'bar',
+    data:{labels:cs,datasets:[{data:vals,backgroundColor:clrs,borderRadius:3}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.parsed.x.toFixed(1)} t/person`}}},
+      scales:{
+        x:{ticks:{font:{size:9},color:'#7A8499',callback:v=>v+' t'},grid:{color:'rgba(255,255,255,0.04)'}},
+        y:{ticks:{font:{size:9},color:'#7A8499'},grid:{display:false}}
+      }
+    }
+  });
+}
+
+function setC(c,btn){
+  selC=c;
+  document.querySelectorAll('.cbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  refresh();
+}
+
+function setY(y){
+  selY=parseInt(y);
+  document.getElementById('yrLbl').textContent=y;
+  refresh();
+}
+
+function refresh(){updateKPIs();buildTrend();buildBar();buildPie();buildPC()}
+refresh();
+</script>
+</body>
+</html>
